@@ -1,6 +1,10 @@
 <?php
 class ASA_Forms {
     private $_form_id = 18212;
+    private $_url;
+    private $_url_prefix = 'https://solutions.refinitiv.com/LP=';
+    private $_post_id;
+    private $_query_string;
     public $utm_source;
     public $utm_content;
     public $utm_campaign;
@@ -8,15 +12,12 @@ class ASA_Forms {
     public $utm_term;
     public $elqCampaignID;
     public $referred_By;
-    private $_url;
-    private $_post_id = 0;
-    public $query_string = '';
 
     public function __construct() {
-        $this->start_session();
+        $this->_start_session();
     }
 
-    public function start_session() {
+    private function _start_session() {
         if(!session_id()) {
             session_start();
         }
@@ -28,7 +29,6 @@ class ASA_Forms {
 
     private function _setFormId() {
         $this->_setPostId();
-
         switch ($this->_post_id) {
             case 2849:
                 $this->_form_id = 18212;
@@ -57,28 +57,29 @@ class ASA_Forms {
 
         //  loop through the query values
         foreach ($query_values as $query_value => $query_default_value) {
-            //  check if the query value is set
+            //  check if the query value is set in the query string
             if ((isset($_GET[$query_value]) && $_GET[$query_value] != '')) {
                 $temp = filter_input(INPUT_GET, $query_value, FILTER_SANITIZE_STRING); // sanitize
                 $this->{$query_value} = $temp;
-                $this->query_string .= '&'.$query_value.'='.$temp;
+                $this->_query_string .= '&'.$query_value.'='.$temp;
+                // check if the query value is set in the session
             } elseif ((isset($_SESSION[$query_value]) && $_SESSION[$query_value] != '')) {
                 $this->{$query_value} = esc_attr($_SESSION[$query_value]); // sanitize
-                $this->query_string .= '&'.$query_value.'='.urlencode($_SESSION[$query_value]); // sanitize
+                $this->_query_string .= '&'.$query_value.'='.urlencode($_SESSION[$query_value]); // sanitize
             }
         }
 
         //  remove the first character from the query string
-        $this->query_string = substr($this->query_string, 1);
+        $this->_query_string = substr($this->_query_string, 1);
     }
 
     private function _getQueryString():string {
         $this->_setQueryString();
-        return $this->query_string;
+        return $this->_query_string;
     }
 
     private function _setUrl() {
-        $this->_url = 'https://solutions.refinitiv.com/LP='.$this->_getFormId().'?'.$this->_getQueryString();
+        $this->_url = $this->_url_prefix.$this->_getFormId().'?'.$this->_getQueryString();
     }
 
     public function getUrl():string {
