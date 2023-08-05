@@ -25,7 +25,7 @@ if (!class_exists('CaptureUTM')) {
         public function capture_utm() {
             $utm_parameters = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'referred_By', 'elqCampaignId'];
             foreach($utm_parameters as $utm) {
-                if($utm_value = filter_input(INPUT_GET, $utm, FILTER_SANITIZE_STRING)) {
+                if($utm_value = filter_input(INPUT_GET, $utm, FILTER_SANITIZE_STRING)) { // sanitize
                     $_SESSION[$utm] = $utm_value;
                 }
             }
