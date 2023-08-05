@@ -27,3 +27,17 @@ function ele_disable_page_title( $return ) {
 }
 add_filter( 'hello_elementor_page_title', 'ele_disable_page_title' );
 
+
+
+///////////// asaweb Gerald
+function include_footer_php_file()
+{
+    // only do it for 2 pages that have the forms
+    $post_id = get_the_ID();
+    if ($post_id == 2849 || $post_id == 2924) {
+        include get_stylesheet_directory() . '/js/forms.class.php';
+    }
+}
+
+add_action('wp_footer', 'include_footer_php_file');
+///////////// asaweb Gerald
