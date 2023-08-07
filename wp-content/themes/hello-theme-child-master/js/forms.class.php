@@ -3,6 +3,7 @@ class ASA_Forms {
     private $_form_id = 18212;
     private $_url;
     private $_url_prefix = 'https://solutions.refinitiv.com/LP=';
+    private $_url_whitepaper = 'https://info.giact.com/l/312331/2021-12-03/gxryx';
     private $_post_id;
     private $_query_string;
     public $utm_source;
@@ -36,10 +37,14 @@ class ASA_Forms {
             case 2924:
                 $this->_form_id = 18233;
                 break;
+            case 3038:
+                $this->_form_id = '';
+                $this->_url_prefix = $this->_url_whitepaper;
+                break;
         }
     }
 
-    private function _getFormId():int {
+    private function _getFormId() {
         $this->_setFormId();
         return $this->_form_id;
     }
@@ -79,6 +84,7 @@ class ASA_Forms {
     }
 
     private function _setUrl() {
+        $this->_setFormId();
         $this->_url = $this->_url_prefix.$this->_getFormId().'?'.$this->_getQueryString();
     }
 

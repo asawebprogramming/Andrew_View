@@ -4,7 +4,7 @@
  * Plugin URI: https://giact.com/
  * Description: This is a Custom WordPress Plugin that captures UTM parameters from URL. It is a helper to the demo page, the download now page
  * Version: 1.0.0
- * Author: Andrew Tilbury
+ * Author: _________
  * Author URI: https://giact.com/
  * License: GPL2
  */

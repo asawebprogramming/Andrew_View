@@ -14,9 +14,9 @@
 ///////////// Gerald
 function asa_include_footer_php_file()
 {
-    // only do it for 2 pages that have the forms
+    // only do it for 3 pages that have the forms
     $post_id = get_the_ID();
-    if ($post_id == 2849 || $post_id == 2924) {
+    if ($post_id == 2849 || $post_id == 2924 || $post_id == 3038) {
         include get_stylesheet_directory() . '/js/forms.class.php';
         // get stylesheet directory is the path to the child theme
         // forms.class.php is the file that outputs the javascript
